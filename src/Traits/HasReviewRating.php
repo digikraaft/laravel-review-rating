@@ -72,7 +72,7 @@ trait HasReviewRating
      */
     public function numberOfReviews(?Carbon $from = null, ?Carbon $to = null): int
     {
-        if(! $from && !$to) {
+        if (! $from && ! $to) {
             return $this->reviews()->count();
         }
 
@@ -95,7 +95,7 @@ trait HasReviewRating
      */
     public function numberOfRatings(?Carbon $from = null, ?Carbon $to = null): int
     {
-        if(! $from && !$to) {
+        if (! $from && ! $to) {
             return $this->reviews()
                     ->whereNotNull('rating')
                     ->count();
@@ -115,8 +115,8 @@ trait HasReviewRating
 
     public function averageRating(?int $round = null, ?Carbon $from = null, ?Carbon $to = null): ?float
     {
-        if($round) {
-            if(! $from && !$to) {
+        if ($round) {
+            if (! $from && ! $to) {
                 return $this->reviews()
                     ->selectRaw('ROUND(AVG(rating), ' . $round . ') AS averageRating')
                     ->pluck('averageRating')
@@ -132,7 +132,7 @@ trait HasReviewRating
                 ->first();
         }
 
-        if(! $from && !$to) {
+        if (! $from && ! $to) {
             return $this->reviews()
                 ->selectRaw('AVG(rating) AS averageRating')
                 ->pluck('averageRating')

@@ -4,7 +4,6 @@
 namespace Digikraaft\ReviewRating\Events;
 
 use Digikraaft\ReviewRating\Models\Review;
-use Illuminate\Database\Eloquent\Model;
 
 class ReviewCreatedEvent
 {

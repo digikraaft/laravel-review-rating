@@ -26,7 +26,7 @@ class HasReviewRatingTest extends TestCase
         ]);
 
         $this->author = TestAuthorModel::create([
-            'name' => 'Test User'
+            'name' => 'Test User',
         ]);
     }
 
@@ -364,7 +364,6 @@ class HasReviewRatingTest extends TestCase
         ]);
         $this->assertTrue($this->testModel->hasReview());
         $this->assertEquals(2, $this->testModel->numberOfRatings());
-
     }
 
     /** @test */
@@ -474,8 +473,8 @@ class HasReviewRatingTest extends TestCase
         ]);
         $this->assertTrue($this->testModel->hasReview());
         $this->assertEquals(3, $this->testModel->numberOfRatings());
-        $this->assertEquals( 4.66666666666667, $this->testModel->averageRating());
-        $this->assertEquals( 4.67, $this->testModel->averageRating(2));
+        $this->assertEquals(4.66666666666667, $this->testModel->averageRating());
+        $this->assertEquals(4.67, $this->testModel->averageRating(2));
     }
 
     /** @test */
