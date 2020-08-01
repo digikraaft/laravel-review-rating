@@ -1,0 +1,55 @@
+{
+    "name": "digikraaft/laravel-review-rating",
+    "description": "Review & Rating system for Laravel 5.8, 6.*, 7.*",
+    "keywords": [
+        "digikraaft",
+        "reviews",
+        "ratings",
+        "laravel"
+    ],
+    "homepage": "https://github.com/digikraaft/laravel-review-rating",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim Oladoyinbo",
+            "email": "dev@digitalkraaft.com",
+            "homepage": "https://digitalkraaft.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "laravel/framework": "~5.8|^6.0|^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.8|^4.0|^5.0",
+        "phpunit/phpunit": "^8.2|^9.0",
+        "spatie/test-time": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Digikraaft\\ReviewRating\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Digikraaft\\ReviewRating\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Digikraaft\\ReviewRating\\ReviewRatingServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
