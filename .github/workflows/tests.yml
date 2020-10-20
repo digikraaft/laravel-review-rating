@@ -11,14 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         php: [7.4]
-        laravel: [5.8.*, 6.*, 7.*]
+        laravel: [8.*]
         include:
-          - laravel: 7.*
-            testbench: 5.*
-          - laravel: 6.*
-            testbench: 4.*
-          - laravel: 5.8.*
-            testbench: 3.8.*
+          - laravel: 8.*
+            testbench: 6.*
     name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     steps:
