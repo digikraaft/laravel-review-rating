@@ -39,10 +39,11 @@ trait HasReviewRating
 
     private function createReview($review, $author, $rating, $title)
     {
+        $keyName = $author->getKeyName();
         $this->reviews()->create([
             'review' => $review,
-            'author_id' => $author->getKeyName(),
-            'author_type' => get_class($author),
+            'author_id' => $author->$keyName,
+            'author_type' => $author->getMorphClass(),
             'rating' => $rating,
             'title' => $title,
         ]);
@@ -60,8 +61,8 @@ trait HasReviewRating
     public function hasRating(): bool
     {
         return $this->reviews()
-                    ->whereNotNull('rating')
-                    ->count() > 0;
+            ->whereNotNull('rating')
+            ->count() > 0;
     }
 
     /**
@@ -72,7 +73,7 @@ trait HasReviewRating
      */
     public function numberOfReviews(?Carbon $from = null, ?Carbon $to = null): int
     {
-        if (! $from && ! $to) {
+        if (!$from && !$to) {
             return $this->reviews()->count();
         }
 
@@ -81,10 +82,10 @@ trait HasReviewRating
         }
 
         return $this->reviews()
-                ->whereBetween(
-                    'created_at',
-                    [$from->toDateTimeString(), $to->toDateTimeString()]
-                )->count();
+            ->whereBetween(
+                'created_at',
+                [$from->toDateTimeString(), $to->toDateTimeString()]
+            )->count();
     }
 
     /**
@@ -95,10 +96,10 @@ trait HasReviewRating
      */
     public function numberOfRatings(?Carbon $from = null, ?Carbon $to = null): int
     {
-        if (! $from && ! $to) {
+        if (!$from && !$to) {
             return $this->reviews()
-                    ->whereNotNull('rating')
-                    ->count();
+                ->whereNotNull('rating')
+                ->count();
         }
 
         if ($from->greaterThan($to)) {
@@ -116,7 +117,7 @@ trait HasReviewRating
     public function averageRating(?int $round = null, ?Carbon $from = null, ?Carbon $to = null): ?float
     {
         if ($round) {
-            if (! $from && ! $to) {
+            if (!$from && !$to) {
                 return $this->reviews()
                     ->selectRaw('ROUND(AVG(rating), ' . $round . ') AS averageRating')
                     ->pluck('averageRating')
@@ -132,7 +133,7 @@ trait HasReviewRating
                 ->first();
         }
 
-        if (! $from && ! $to) {
+        if (!$from && !$to) {
             return $this->reviews()
                 ->selectRaw('AVG(rating) AS averageRating')
                 ->pluck('averageRating')
