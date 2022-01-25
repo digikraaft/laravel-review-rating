@@ -1,6 +1,6 @@
 {
     "name": "digikraaft/laravel-review-rating",
-    "description": "Review & Rating system for Laravel 5.8, 6.*, 7.*",
+    "description": "Review & Rating system for Laravel",
     "keywords": [
         "digikraaft",
         "reviews",
@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.4|8.0.*",
+        "php": "^7.4|^8.0",
         "laravel/framework": "^8.0"
     },
     "require-dev": {
