@@ -134,10 +134,7 @@ trait HasReviewRating
         }
 
         if (!$from && !$to) {
-            return $this->reviews()
-                ->selectRaw('AVG(rating) AS averageRating')
-                ->pluck('averageRating')
-                ->first();
+            return round($this->reviews()->avg('rating'));
         }
 
         return $this->reviews()
