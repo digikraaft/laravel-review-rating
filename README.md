@@ -9,7 +9,7 @@
 This package provides a simple review and rating system for Laravel. It supports
 Laravel 5.8 an up. Here is a quick demonstration of how it can be used:
 
-```
+```php
 //create a review
 $author = User::find(1);
 $review = "Awesome package! I highly recommend it!!";
@@ -47,15 +47,15 @@ You must publish the migration with:
 php artisan vendor:publish --provider="Digikraaft\ReviewRating\ReviewRatingServiceProvider" --tag="migrations"
 ```
 Run the migration to publish the `reviews` table with:
-```
+```bash
 php artisan migrate
 ```
 You can optionally publish the config-file with:
-```
+```bash
 php artisan vendor:publish --provider="Digikraaft\ReviewRating\ReviewRatingServiceProvider" --tag="config"
 ```
 The content of the file that will be published to `config/review-rating.php`:
-``` 
+```php
 return [
     /*
       * The class name of the review model that holds all reviews.
@@ -88,7 +88,7 @@ class EloquentModel extends Model
 ### Create a review
 To create a review, use the `review` function of the trait.
 Like this:
-``` 
+```php
 $author = User::find(1);
 $review = "Awesome package! I highly recommend it!!";
 
@@ -99,7 +99,7 @@ This can be any Eloquent model.
 
 To create a review with rating, pass in the rating value as the third argument of
 the `review` function. Valid values are `int`s and `float`s:
-```
+```php
 $author = User::find(1);
 $review = "Awesome package! I highly recommend it!!";
 
@@ -108,7 +108,7 @@ $model->review($review, $author, 5);
 
 To create a review with rating and title, add the title as the fourth argument
 of the `review` function:
-```
+```php
 $author = User::find(1);
 $review = "Awesome package! I highly recommend it!!";
 
@@ -116,27 +116,27 @@ $model->review($review, $author, 5, "Lovely packages");
 ```
 ### Retrieving reviews
 You can get the last review like this:
-```
+```php
 $model->latestReview(); //returns the latest instance of Digikraaft\ReviewRating\Review
 ```
 The content of the review can be gotten like this:
-```
+```php
 $model->latestReview()->reveiw;
 ```
 To get the rating for the review, do this:
-```
+```php
 $model->latestReview()->rating;
 ```
 To get the title of the review:
-```
+```php
 $model->latestReview()->title;
 ```
 All reviews can be retrieved like this:
-```
+```php
 $model->reviews();
 ```
 To access each review from the reviews retrieved, do this:
-```
+```php
 $reviews = $model->reviews();
 
 foreach($reviews as $review){
@@ -144,18 +144,18 @@ foreach($reviews as $review){
 }
 ```
 The `allReviews` scope can be used to retrieve all the reviews for all instances of a model:
-```
+```php
 $allReviews = EloquentModel::allReviews();
 ```
 ### Retrieving basic Review Stats
 You can get the number of reviews a model has:
-```
+```php
 $model->numberOfReviews();
 ```
 To get the number of reviews a model has received over a period,
 pass in a `Carbon` formatted `$from` and `$to` dates as the first and second
 arguments respectively:
-```
+```php
 //get the number of reviews a model has received over the last month
 $from = now()->subMonth();
 $to = now();
@@ -165,13 +165,13 @@ $model->numberOfReviews($from, $to);
 Note that an `InvalidDate` exception will be thrown if the `$from` date is later than the `$to`
 
 You can get the number of ratings a model has:
-```
+```php
 $model->numberOfRatings();
 ```
 To get the number of ratings a model has received over a period,
 pass in a `Carbon` formatted `$from` and `$to` dates as the first and second
 arguments respectively:
-```
+```php
 //get the number of reviews a model has received over the last month
 $from = now()->subMonth();
 $to = now();
@@ -179,20 +179,20 @@ $to = now();
 $model->numberOfRatings($from, $to);
 ```
 To get the average rating a model has received:
-```
+```php
 $model->averageRating();
 ```
 The average rating that is returned is by default not rounded.
 If you would like to `round` the returned result, pass an integer value of the
 decimal place you want it rounded to.
-```
+```php
 //round up to 2 decimal places
 $model->averageRating(2);
 ```
 To get the average rating a model has received over a period,
 pass in a `Carbon` formatted `$from` and `$to` dates as the first and second
 arguments respectively:
-```
+```php
 //get the average rating a model has received over the last month, rounded to 2 decimal places:
 $from = now()->subMonth();
 $to = now();
@@ -200,18 +200,18 @@ $to = now();
 $model->averageRating(2, $from, $to);
 ```
 The `withRatings` scope can be used to retrieve all the reviews that have a rating for all instances of a model:
-```
+```php
 $allReviewsWithRating = EloquentModel::withRatings();
 ```
 
 ### Check if model has review
 You can check if a model has at least one review:
-```
+```php
 $model->hasReview();
 ```
 ### Check if model has rating
 You can check if a model has at least one rating:
-```
+```php
 $model->hasRating();
 ```
 
@@ -219,7 +219,7 @@ $model->hasRating();
 The `Digikraaft\ReviewRating\Events\ReviewCreatedEvent` event will be dispatched when 
 a review has been created. You can listen to this event and take necessary actions.
 An instance of the review will be passed to the event class and can be accessed for use:
-```
+```php
 namespace Digikraaft\ReviewRating\Events;
 
 use Digikraaft\ReviewRating\Models\Review;
@@ -247,7 +247,7 @@ also change the `model_primary_key_attribute` key of the `review-rating` config 
 
 ## Testing
 Use the command below to run your tests:
-``` bash
+```bash
 composer test
 ```
 
