@@ -133,7 +133,7 @@ $model->latestReview()->title;
 ```
 All reviews can be retrieved like this:
 ```php
-$model->reviews();
+$model->reviews;
 ```
 To access each review from the reviews retrieved, do this:
 ```php
