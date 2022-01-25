@@ -118,16 +118,12 @@ trait HasReviewRating
     {
         if ($round) {
             if (!$from && !$to) {
-                return round($this->reviews()
-                    ->selectRaw('ROUND(AVG(rating), ' . $round . ') AS rating')
-                    ->avg('rating'));
+                return round($this->reviews()->avg('rating'), $round);
             }
 
             return round($this->reviews()
-                ->whereBetween(
-                    'created_at',
-                    [$from->toDateTimeString(), $to->toDateTimeString()]
-                )->avg('rating'));
+                ->whereBetween('created_at', [$from->toDateTimeString(), $to->toDateTimeString()])
+                ->avg('rating'), $round);
         }
 
         if (!$from && !$to) {
