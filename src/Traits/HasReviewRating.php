@@ -118,23 +118,20 @@ trait HasReviewRating
     {
         if ($round) {
             if (!$from && !$to) {
-                return $this->reviews()
-                    ->selectRaw('ROUND(AVG(rating), ' . $round . ') AS averageRating')
-                    ->pluck('averageRating')
-                    ->first();
+                return round($this->reviews()
+                    ->selectRaw('ROUND(AVG(rating), ' . $round . ') AS rating')
+                    ->avg('rating'));
             }
 
-            return $this->reviews()
+            return round($this->reviews()
                 ->whereBetween(
                     'created_at',
                     [$from->toDateTimeString(), $to->toDateTimeString()]
-                )->selectRaw('ROUND(AVG(rating), ' . $round . ') AS averageRating')
-                ->pluck('averageRating')
-                ->first();
+                )->avg('rating'));
         }
 
         if (!$from && !$to) {
-            return round($this->reviews()->avg('rating'));
+            return $this->reviews()->avg('rating');
         }
 
         return $this->reviews()
@@ -142,9 +139,7 @@ trait HasReviewRating
                 'created_at',
                 [$from->toDateTimeString(), $to->toDateTimeString()]
             )
-            ->selectRaw('AVG(rating) AS averageRating')
-            ->pluck('averageRating')
-            ->first();
+            ->avg('rating');
     }
 
     protected function getReviewTableName(): string
