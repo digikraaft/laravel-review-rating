@@ -127,15 +127,12 @@ trait HasReviewRating
         }
 
         if (!$from && !$to) {
-            return $this->reviews()->avg('rating');
+            return round($this->reviews()->avg('rating'));
         }
 
-        return $this->reviews()
-            ->whereBetween(
-                'created_at',
-                [$from->toDateTimeString(), $to->toDateTimeString()]
-            )
-            ->avg('rating');
+        return round($this->reviews()
+            ->whereBetween('created_at', [$from->toDateTimeString(), $to->toDateTimeString()])
+            ->avg('rating'));
     }
 
     protected function getReviewTableName(): string
