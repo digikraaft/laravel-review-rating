@@ -58,6 +58,15 @@ trait HasReviewRating
         return $this->reviews()->count() > 0;
     }
 
+    public function hasReviewed(Model $author): bool
+    {
+        $keyName = $author->getKeyName();
+        return $this->reviews()
+            ->where('author_id', $author->$keyName)
+            ->where('author_type', $author->getMorphClass())
+            ->count() > 0;
+    }
+
     public function hasRating(): bool
     {
         return $this->reviews()

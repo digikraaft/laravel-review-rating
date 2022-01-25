@@ -114,6 +114,14 @@ $review = "Awesome package! I highly recommend it!!";
 
 $model->review($review, $author, 5, "Lovely packages");
 ```
+
+You can also check if user has reviewed the model by using the `hasReviewed` function:
+```php
+    if ($model->hasReviewed(auth()->user())) {
+        // user has reviewed the model
+    }
+```
+
 ### Retrieving reviews
 You can get the last review like this:
 ```
