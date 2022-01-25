@@ -137,7 +137,7 @@ $model->reviews;
 ```
 To access each review from the reviews retrieved, do this:
 ```php
-$reviews = $model->reviews();
+$reviews = $model->reviews;
 
 foreach($reviews as $review){
     echo $review->review . "<br>";
