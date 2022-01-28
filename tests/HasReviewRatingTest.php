@@ -541,4 +541,17 @@ class HasReviewRatingTest extends TestCase
             )
         );
     }
+
+    /** @test */
+    public function it_can_check_if_user_has_reviewed()
+    {
+        $this->testModel
+            ->review(
+                'Some lovely review here',
+                $this->author,
+                4,
+                'Test title'
+            );
+        $this->assertTrue($this->testModel->hasReviewed($this->author));
+    }
 }
