@@ -1,3 +1,7 @@
+## 2.2.0 - 2022-01-25
+- Fixed support for PHP 8.*
+- Fixed averageRating
+
 ## 2.1.0 - 2021-11-02
 - Support for PHP 8
 
