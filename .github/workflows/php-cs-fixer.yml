@@ -11,9 +11,9 @@ jobs:
                 uses: actions/checkout@v1
 
             -   name: Fix style
-                uses: docker://oskarstark/php-cs-fixer-ga
+                uses: docker://oskarstark/php-cs-fixer-ga:2.19.0
                 with:
-                    args: --config=.php_cs --allow-risky=yes
+                    args: --config=.php-cs-fixer.php --allow-risky=yes
 
             -   name: Extract branch name
                 shell: bash
