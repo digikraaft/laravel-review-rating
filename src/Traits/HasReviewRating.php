@@ -61,6 +61,7 @@ trait HasReviewRating
     public function hasReviewed(Model $author): bool
     {
         $keyName = $author->getKeyName();
+
         return $this->reviews()
             ->where('author_id', $author->$keyName)
             ->where('author_type', $author->getMorphClass())
