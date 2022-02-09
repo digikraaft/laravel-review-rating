@@ -1,8 +1,8 @@
 name: tests
 
 on:
-    push:
-    pull_request:
+  push:
+  pull_request:
 
 jobs:
   tests:
@@ -30,9 +30,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-            php-version: ${{ matrix.php }}
-            extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
-            coverage: none
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          coverage: none
 
       - name: Install dependencies
         run: composer update --prefer-dist --no-interaction --no-suggest
