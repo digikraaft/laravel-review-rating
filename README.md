@@ -129,7 +129,7 @@ $model->latestReview(); //returns the latest instance of Digikraaft\ReviewRating
 ```
 The content of the review can be gotten like this:
 ```php
-$model->latestReview()->reveiw;
+$model->latestReview()->review;
 ```
 To get the rating for the review, do this:
 ```php
