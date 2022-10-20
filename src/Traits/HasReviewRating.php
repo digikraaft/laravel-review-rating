@@ -40,7 +40,7 @@ trait HasReviewRating
     private function createReview($review, $author, $rating, $title)
     {
         $keyName = $author->getKeyName();
-        $this->reviews()->create([
+        $createdReview = $this->reviews()->create([
             'review' => $review,
             'author_id' => $author->$keyName,
             'author_type' => $author->getMorphClass(),
@@ -48,7 +48,7 @@ trait HasReviewRating
             'title' => $title,
         ]);
 
-        event(new ReviewCreatedEvent($this->latestReview()));
+        event(new ReviewCreatedEvent($createdReview));
 
         return $this;
     }
