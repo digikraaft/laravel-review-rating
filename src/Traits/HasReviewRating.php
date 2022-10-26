@@ -126,26 +126,19 @@ trait HasReviewRating
 
     public function averageRating(?int $round = null, ?Carbon $from = null, ?Carbon $to = null): ?float
     {
-        if ($round) {
-            if (! $from && ! $to) {
-                return round($this->reviews()->avg('rating'), $round);
-            }
-
-            return round($this->reviews()
-                ->whereBetween('created_at', [$from->toDateTimeString(), $to->toDateTimeString()])
-                ->avg('rating'), $round);
-        }
-
-        if (! $from && ! $to) {
-            return $this->reviews()->avg('rating');
-        }
-
         return $this->reviews()
-            ->whereBetween(
-                'created_at',
-                [$from->toDateTimeString(), $to->toDateTimeString()]
-            )
-            ->avg('rating');
+            ->when($from && $to, function ($query) use ($from, $to) {
+                $query->whereBetween('created_at', [
+                    $from->toDateTimeString(),
+                    $to->toDateTimeString()
+                ]);
+            })
+            ->when($round, function ($query) use ($round) {
+                $query->selectRaw("ROUND(AVG(rating), $round) as rating");
+            }, function ($query) {
+                $query->selectRaw("AVG(rating) as rating");
+            })
+            ->value('rating');
     }
 
     protected function getReviewTableName(): string
