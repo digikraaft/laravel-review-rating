@@ -40,7 +40,7 @@ trait HasReviewRating
     private function createReview($review, $author, $rating, $title)
     {
         $keyName = $author->getKeyName();
-        $this->reviews()->create([
+        $createdReview = $this->reviews()->create([
             'review' => $review,
             'author_id' => $author->$keyName,
             'author_type' => $author->getMorphClass(),
@@ -48,7 +48,7 @@ trait HasReviewRating
             'title' => $title,
         ]);
 
-        event(new ReviewCreatedEvent($this->latestReview()));
+        event(new ReviewCreatedEvent($createdReview));
 
         return $this;
     }
@@ -124,28 +124,21 @@ trait HasReviewRating
             )->count();
     }
 
-    public function averageRating(?int $round = null, ?Carbon $from = null, ?Carbon $to = null): ?float
+    public function averageRating(?int $round = 2, ?Carbon $from = null, ?Carbon $to = null): ?float
     {
-        if ($round) {
-            if (! $from && ! $to) {
-                return round($this->reviews()->avg('rating'), $round);
-            }
-
-            return round($this->reviews()
-                ->whereBetween('created_at', [$from->toDateTimeString(), $to->toDateTimeString()])
-                ->avg('rating'), $round);
-        }
-
-        if (! $from && ! $to) {
-            return $this->reviews()->avg('rating');
-        }
-
         return $this->reviews()
-            ->whereBetween(
-                'created_at',
-                [$from->toDateTimeString(), $to->toDateTimeString()]
-            )
-            ->avg('rating');
+            ->when($from && $to, function ($query) use ($from, $to) {
+                $query->whereBetween('created_at', [
+                    $from->toDateTimeString(),
+                    $to->toDateTimeString()
+                ]);
+            })
+            ->when($round, function ($query) use ($round) {
+                $query->selectRaw("ROUND(AVG(rating), $round) as rating");
+            }, function ($query) {
+                $query->selectRaw("AVG(rating) as rating");
+            })
+            ->value('rating');
     }
 
     protected function getReviewTableName(): string
