@@ -130,7 +130,7 @@ trait HasReviewRating
             ->when($from && $to, function ($query) use ($from, $to) {
                 $query->whereBetween('created_at', [
                     $from->toDateTimeString(),
-                    $to->toDateTimeString()
+                    $to->toDateTimeString(),
                 ]);
             })
             ->when($round, function ($query) use ($round) {
