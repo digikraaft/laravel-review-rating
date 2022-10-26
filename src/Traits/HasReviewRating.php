@@ -124,7 +124,7 @@ trait HasReviewRating
             )->count();
     }
 
-    public function averageRating(?int $round = null, ?Carbon $from = null, ?Carbon $to = null): ?float
+    public function averageRating(?int $round = 2, ?Carbon $from = null, ?Carbon $to = null): ?float
     {
         return $this->reviews()
             ->when($from && $to, function ($query) use ($from, $to) {
