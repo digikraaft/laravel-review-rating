@@ -25,14 +25,8 @@ trait HasReviewRating
         return $this->reviews()->first();
     }
 
-    /**
-     * @param string $review
-     * @param Model $author
-     * @param float|null $rating
-     * @param string|null $title
-     * @return $this
-     */
-    public function review(string $review, Model $author, ?float $rating = null, ?string $title = null): self
+
+    public function review(string $review, Model $author, ?float $rating = null, ?string $title = null) : self
     {
         return $this->createReview($review, $author, $rating, $title);
     }
