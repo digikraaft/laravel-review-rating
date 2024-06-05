@@ -8,10 +8,10 @@ jobs:
 
         steps:
             -   name: Checkout code
-                uses: actions/checkout@v1
+                uses: actions/checkout@v4
 
             -   name: Fix style
-                uses: docker://oskarstark/php-cs-fixer-ga:2.19.0
+                uses: docker://oskarstark/php-cs-fixer-ga:3.26.0
                 with:
                     args: --config=.php-cs-fixer.php --allow-risky=yes
 
@@ -21,7 +21,7 @@ jobs:
                 id: extract_branch
 
             -   name: Commit changes
-                uses: stefanzweifel/git-auto-commit-action@v2.3.0
+                uses: stefanzweifel/git-auto-commit-action@v5
                 with:
                     commit_message: Fix styling
                     branch: ${{ steps.extract_branch.outputs.branch }}
