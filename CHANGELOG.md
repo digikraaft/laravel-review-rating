@@ -1,3 +1,9 @@
+## 3.2.0 2025-09-04
+- Added support for Laravel 12
+
+## 3.1.0 2024-06-05
+- Added support for Laravel 11
+
 ## 3.0.0 2023-03-04
 - Added support for Laravel 10
 
