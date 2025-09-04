@@ -30,8 +30,8 @@ class HasReviewRatingTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_can_create_review_without_rating_and_title()
+
+    public function test_that_it_can_create_review_without_rating_and_title()
     {
         Event::fake();
         $review = $this->testModel
@@ -46,8 +46,8 @@ class HasReviewRatingTest extends TestCase
         Event::assertDispatched(ReviewCreatedEvent::class);
     }
 
-    /** @test */
-    public function it_can_create_review_with_rating()
+
+    public function test_that_it_can_create_review_with_rating()
     {
         $review = $this->testModel
             ->review(
@@ -63,8 +63,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertTrue($this->testModel->hasRating());
     }
 
-    /** @test */
-    public function it_can_create_review_with_rating_and_title()
+
+    public function test_that_it_can_create_review_with_rating_and_title()
     {
         $review = $this->testModel
             ->review(
@@ -82,14 +82,14 @@ class HasReviewRatingTest extends TestCase
         $this->assertTrue($this->testModel->hasRating());
     }
 
-    /** @test */
-    public function it_can_handle_getting_a_review_when_there_are_none_set()
+
+    public function test_that_it_can_handle_getting_a_review_when_there_are_none_set()
     {
         $this->assertNull($this->testModel->latestReview());
     }
 
-    /** @test */
-    public function it_can_return_the_latest_review()
+
+    public function test_that_it_can_return_the_latest_review()
     {
         $this->testModel
             ->review(
@@ -121,8 +121,7 @@ class HasReviewRatingTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_return_all_reviews()
+    public function test_that_it_can_return_all_reviews()
     {
         $this->testModel
             ->review(
@@ -149,8 +148,8 @@ class HasReviewRatingTest extends TestCase
         );
         $this->assertEquals(2, $this->testModel->reviews()->count());
     }
-    /** @test */
-    public function it_can_use_a_different_review_model()
+
+    public function test_that_it_can_use_a_different_review_model()
     {
         $this->app['config']->set(
             'review-rating.review_model',
@@ -167,8 +166,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertInstanceOf(AlternativeReviewModel::class, $this->testModel->latestReview());
     }
 
-    /** @test */
-    public function it_can_use_a_custom_name_for_the_relationship_id_column()
+
+    public function test_that_it_can_use_a_custom_name_for_the_relationship_id_column()
     {
         $this->app['config']->set(
             'review-rating.review_model',
@@ -192,8 +191,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertTrue($review->latestReview()->is(CustomModelKeyReviewModel::first()));
     }
 
-    /** @test */
-    public function it_uses_the_default_relationship_id_column_when_configuration_value_is_no_present()
+
+    public function test_that_it_uses_the_default_relationship_id_column_when_configuration_value_is_no_present()
     {
         $this->app['config']->offsetUnset('review-rating.model_primary_key_attribute');
 
@@ -209,8 +208,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertEquals($review->id, $review->latestReview()->model_id);
     }
 
-    /** @test */
-    public function it_can_return_number_of_reviews()
+
+    public function test_that_it_can_return_number_of_reviews()
     {
         $this->testModel
             ->review(
@@ -239,8 +238,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertEquals(2, $this->testModel->numberOfReviews());
     }
 
-    /** @test */
-    public function it_throws_error_when_from_date_is_later_than_to_date()
+
+    public function test_that_it_throws_error_when_from_date_is_later_than_to_date()
     {
         $this->testModel
             ->review(
@@ -270,8 +269,8 @@ class HasReviewRatingTest extends TestCase
         $this->testModel->numberOfReviews(now(), now()->subDays(2));
     }
 
-    /** @test */
-    public function it_can_return_number_of_reviews_over_a_period()
+
+    public function test_that_it_can_return_number_of_reviews_over_a_period()
     {
         $this->testModel->reviews()->create([
             'review' => 'Lovely review 1',
@@ -300,8 +299,8 @@ class HasReviewRatingTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_get_scoped_reviews()
+
+    public function test_that_it_can_get_scoped_reviews()
     {
         $model = TestModel::create(['name' => 'Tim O']);
         $model->review(
@@ -334,8 +333,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertEquals(3, TestModel::allReviews()->count());
     }
 
-    /** @test */
-    public function it_can_return_number_of_ratings()
+
+    public function test_that_it_can_return_number_of_ratings()
     {
         $this->testModel->reviews()->create([
             'review' => 'Lovely review 1',
@@ -366,8 +365,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertEquals(2, $this->testModel->numberOfRatings());
     }
 
-    /** @test */
-    public function it_can_return_number_of_ratings_over_a_period()
+
+    public function test_that_it_can_return_number_of_ratings_over_a_period()
     {
         $this->testModel->reviews()->create([
             'review' => 'Lovely review 1',
@@ -408,8 +407,8 @@ class HasReviewRatingTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_get_scoped_reviews_with_rating()
+
+    public function test_that_it_can_get_scoped_reviews_with_rating()
     {
         $model = TestModel::create(['name' => 'Tim O']);
         $model->review(
@@ -442,8 +441,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertEquals(2, TestModel::withRatings()->count());
     }
 
-    /** @test */
-    public function it_can_get_average_rating()
+
+    public function test_that_it_can_get_average_rating()
     {
         $this->testModel->reviews()->create([
             'review' => 'Lovely review 1',
@@ -477,8 +476,8 @@ class HasReviewRatingTest extends TestCase
         $this->assertEquals(4.67, $this->testModel->averageRating(2));
     }
 
-    /** @test */
-    public function it_can_get_average_rating_over_a_period()
+
+    public function test_that_it_can_get_average_rating_over_a_period()
     {
         $this->testModel->reviews()->create([
             'review' => 'Lovely review 1',
@@ -542,8 +541,8 @@ class HasReviewRatingTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_check_if_user_has_reviewed()
+
+    public function test_that_it_can_check_if_user_has_reviewed()
     {
         $this->testModel
             ->review(
