@@ -22,7 +22,7 @@ abstract class TestCase extends OrchestraTestCase
         $this->setUpDatabase();
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [ReviewRatingServiceProvider::class];
     }
@@ -30,21 +30,21 @@ abstract class TestCase extends OrchestraTestCase
     protected function setUpDatabase()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('designs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('custom_model_key_reviews', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title')->nullable();
             $table->text('review');
             $table->integer('rating')->nullable();
